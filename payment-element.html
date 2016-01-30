@@ -1,0 +1,147 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+
+<link rel="stylesheet" type="text/css" href="css/estilo.css">
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+<!--
+An element providing a solution for payments.
+
+Example:
+
+    <payment-element />
+
+@demo
+-->
+<dom-module id="payment-element">
+
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .author img {
+      float: left;
+      margin-right: 5px;
+      max-height: 100px;
+      max-width: 100px;
+    }
+  </style>
+
+  <template>
+     <dropdown>
+      <input id="toggle2" type="checkbox">
+      <label for="toggle2" class="animate"><img src="imagenes/shopping-krt.png">PAGAR</label>
+      <ul class="animate">
+        <li on-tap="doPaymentPaypal" class="animate">
+          <img src="https://www.paypal.com/es_XC/i/logo/PayPal_mark_37x23.gif" align="left" style="margin-right:7px;"><span style="font-size:11px; font-family: Lato;">Un modo más seguro y sencillo de pagar.</span>
+        </li>
+        <li on-tap="doPaymentMercadoPago" class="animate"><img src="imagenes/mercadopago-logo.png">Mercado Pago</li>
+      </ul>
+    </dropdown>
+    <form id="formMercadoPago" action="https://www.mercadopago.com/mlm/checkout/start?pref_id=[[idmercadopago]]" method="get" target="_blank">
+      
+    </form>
+    
+      <form id="formPaypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_xclick">
+            <input type="hidden" name="business" value="[[userpaypal]]">
+            <input type="hidden" name="lc" value="ES">
+            <input type="hidden" name="item_name" value="[[name]]">
+            <input type="hidden" name="button_subtype" value="services">
+            <input type="hidden" name="no_note" value="0">
+            <input type="hidden" name="no_shipping" value="2">
+            <input type="hidden" name="amount" value="[[amount]]">
+            <input type="hidden" name="currency_code" value="[[currencypaypal]]">
+            <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+            <img alt="" border="0" src="https://www.paypal.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+          </form>
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'payment-element',
+
+    properties: {
+
+      /**
+       * Product's name 
+       * 
+       */
+      name:{
+        type:String
+      },
+      /**
+       * Amount
+       * 
+       */
+      amount:{
+       type:Number
+      },
+      /**
+       *  URL if the buyer approve the payment
+       * 
+       */
+      returnURL:{
+       type:String 
+      },
+      /**
+       *  URL if the buyer cancel de payment
+       * 
+       */
+      cancelURL:{
+       type:String 
+      },
+      /**
+       * Paypal User  
+       * 
+       */
+      userPaypal:{
+       type:String 
+      },
+      /**
+       * Paypal Currency Code
+       * 
+       */
+      currencyPaypal:{
+       type:String 
+      },
+      /**
+       * Payment Id's MercadoPago 
+       * 
+       */
+      idMercadoPago:{
+       type:String 
+      },
+      
+      
+      
+    },
+    doPaymentPaypal:function() {
+      document.forms["formPaypal"].submit(); 
+    },
+    doPaymentMercadoPago:function() {
+      document.forms["formMercadoPago"].submit();
+    },
+    doPaymentPayu:function() {
+      
+    }
+    
+    
+  
+  
+  });
+</script>

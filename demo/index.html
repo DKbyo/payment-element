@@ -1,0 +1,42 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>test-element Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../payment-element.html">
+  </head>
+  <body>
+
+    <p>An example of <code>&lt;payment-element&gt;</code>:</p>
+
+
+    <!--test-element author='{"name": "Lord Meowser", "image": "http://placekitten.com/g/200/300"}' fancy>
+      <h2>Hello seed-element</h2>
+    </test-element-->
+    
+    <payment-element 
+      amount="10"
+      name="IT Services"
+      userPaypal="danyel.nerv@gmail.com" 
+      currencyPaypal="MXN"
+      idMercadoPago="32800111-10cbad23-40f0-4260-b272-5fa2133fcc69"
+      returnURL="http://localhost:8080/"
+      cancelURL="http://localhost:8080/"
+      />
+    <script>
+      
+    </script>
+
+  </body>
+</html>
