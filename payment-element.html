@@ -155,7 +155,7 @@ Example:
   <template>
      <dropdown>
       <input id="toggle2" type="checkbox">
-      <label for="toggle2" class="animate"><img src="imagenes/shopping-krt.png">PAGAR</label>
+      <label for="toggle2" class="animate"><img src="imagenes/shopping-krt.png">[[label]]</label>
       <ul class="animate">
         <li on-tap="doPaymentPaypal" class="animate">
           <img src="https://www.paypal.com/es_XC/i/logo/PayPal_mark_37x23.gif" align="left" style="margin-right:7px;">Paypal
@@ -190,7 +190,15 @@ Example:
     is: 'payment-element',
 
     properties: {
-     
+     /**
+      * Button text
+      */
+      label:{
+        type:String,
+        value:function(){
+          return "Buy";
+        }
+      },
       /**
        * Product's name 
        * 
