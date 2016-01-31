@@ -1,0 +1,269 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+
+
+<!--
+An element providing a solution for payments.
+
+Example:
+
+    <payment-element />
+
+@demo
+-->
+<dom-module id="payment-element">
+
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+    }
+    .btn-pago{
+    	width:100px;
+    	height: 50px;
+    	font-family: Verdana;
+    	color: #013a52;
+    	background: #ffeb00;
+    	border:none;
+    }
+    * {
+      padding: 0;
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      box-sizing: border-box;
+    }
+    
+    .float-right {
+      float: right;
+    }
+    
+    dropdown {
+      display: inline-block;
+      width:100%  ;
+    }
+    
+    dropdown label, dropdown ul li {
+      display: block;
+      width:100%;
+      background: #ECF0F1;
+      padding: 15px 20px;
+    }
+    
+    dropdown label:hover, dropdown ul li:hover {
+      background: var(--payment-text-color,#5ac33b);
+      color: white !important;
+      cursor: pointer;
+    }
+    
+    dropdown label {
+      color: var(--payment-text-color,#5ac33b);
+      border-left: 4px solid var(--payment-text-color,#5ac33b);
+      border-radius: 0 5px 0 0;
+      position: relative;
+      z-index: 2;
+    }
+    
+    dropdown input {
+      display: none;
+    }
+    
+    dropdown input ~ ul {
+      position: relative;
+      visibility: hidden;
+      opacity: 0;
+      top: -20px;
+      z-index: 1;
+    }
+    
+    dropdown input:checked + label {
+      background: #1ABC9C;
+      color: white;
+    }
+    
+    dropdown input:checked ~ ul {
+      visibility: visible;
+      opacity: 1;
+      top: 0;
+    }
+    
+    dropdown ul li:nth-child(1) {
+      border-left: 4px solid #0072B5 !important;
+    }
+    dropdown ul li:nth-child(1) .fa {
+      color: #0072B5;
+    }
+    dropdown ul li:nth-child(1):hover {
+      background: #0072B5 !important;
+      color: white;
+    }
+    dropdown ul li:nth-child(1):hover .fa {
+      color: white;
+    }
+    
+    dropdown ul li:nth-child(2) {
+      border-left: 4px solid #E74C3C !important;
+    }
+    dropdown ul li:nth-child(2) .fa {
+      color: #E74C3C !important;
+    }
+    dropdown ul li:nth-child(2):hover {
+      background: #E74C3C !important;
+      color: white;
+    }
+    dropdown ul li:nth-child(2):hover .fa {
+      color: white;
+    }
+    
+    dropdown ul li:nth-child(3) {
+      border-left: 4px solid #2C3E50 !important;
+    }
+    dropdown ul li:nth-child(3) .fa {
+      color: #2C3E50;
+    }
+    dropdown ul li:nth-child(3):hover {
+      background: #2C3E50 !important;
+      color: white;
+    }
+    dropdown ul li:nth-child(3):hover .fa {
+      color: white;
+    }
+    
+    .animate {
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -ms-transition: all .3s;
+      -ms-transition: all .3s;
+      transition: all .3s;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      /* Chrome and Safari */
+      -moz-backface-visibility: hidden;
+      /* Firefox */
+      -ms-backface-visibility: hidden;
+      /* Internet Explorer */
+    }
+  </style>
+
+  <template>
+     <dropdown>
+      <input id="toggle2" type="checkbox">
+      <label for="toggle2" class="animate"><img src="imagenes/shopping-krt.png">[[label]]</label>
+      <ul class="animate">
+        <li on-tap="doPaymentPaypal" class="animate">
+          <img src="https://www.paypal.com/es_XC/i/logo/PayPal_mark_37x23.gif" align="left" style="margin-right:7px;">Paypal
+        </li>
+        <li on-tap="doPaymentMercadoPago" class="animate"><img src="imagenes/mercadopago-logo.png">Mercado Pago</li>
+      </ul>
+    </dropdown>
+    <form id="formMercadoPago" action="https://www.mercadopago.com/mlm/checkout/start?pref_id=[[idmercadopago]]" method="get" target="_blank">
+      
+    </form>
+    
+      <form id="formPaypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_xclick">
+            <input type="hidden" name="business" value="[[userpaypal]]">
+            <input type="hidden" name="lc" value="ES">
+            <input type="hidden" name="item_name" value="[[name]]">
+            <input type="hidden" name="button_subtype" value="services">
+            <input type="hidden" name="no_note" value="0">
+            <input type="hidden" name="no_shipping" value="2">
+            <input type="hidden" name="amount" value="[[amount]]">
+            <input type="hidden" name="currency_code" value="[[currencypaypal]]">
+            <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+            <img alt="" border="0" src="https://www.paypal.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+          </form>
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'payment-element',
+
+    properties: {
+     /**
+      * Button text
+      */
+      label:{
+        type:String,
+        value:function(){
+          return "Buy";
+        }
+      },
+      /**
+       * Product's name 
+       * 
+       */
+      name:{
+        type:String
+      },
+      /**
+       * Amount
+       * 
+       */
+      amount:{
+       type:Number
+      },
+      /**
+       *  URL if the buyer approve the payment
+       * 
+       */
+      returnURL:{
+       type:String 
+      },
+      /**
+       *  URL if the buyer cancel de payment
+       * 
+       */
+      cancelURL:{
+       type:String 
+      },
+      /**
+       * Paypal User  
+       * 
+       */
+      userPaypal:{
+       type:String 
+      },
+      /**
+       * Paypal Currency Code
+       * 
+       */
+      currencyPaypal:{
+       type:String 
+      },
+      /**
+       * Payment Id's MercadoPago 
+       * 
+       */
+      idMercadoPago:{
+       type:String 
+      },
+      
+      
+      
+    },
+    doPaymentPaypal:function() {
+      document.forms["formPaypal"].submit(); 
+    },
+    doPaymentMercadoPago:function() {
+      document.forms["formMercadoPago"].submit();
+    },
+    doPaymentPayu:function() {
+      
+    }
+    
+    
+  
+  
+  });
+</script>

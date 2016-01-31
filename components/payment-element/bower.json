@@ -1,0 +1,30 @@
+{
+  "name": "payment-element",
+  "version": "1.2.0",
+  "authors": [
+    "Danyel Cabello <danyel.nerv@gmail.com>",
+    "Ruben Leyva <rubenmleyva@gmail.com>"
+  ],
+  "description": "An element providing a solution for payments",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "payment"
+  ],
+  "main": "payment-element.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/DKbyo/payment-element/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "^1.2.4"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}
